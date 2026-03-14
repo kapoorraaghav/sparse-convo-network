@@ -132,4 +132,41 @@ class SparseAutoencoder(nn.Module):
         x_hat = x_hat[:, :, :H, :W]
 
         return x_hat, latent
+class DenseAutoencoder(nn.Module):
+    def __init__(self, in_channels=8):
+        super().__init__()
 
+        # Encoder — same structure, no masking
+        self.enc1  = nn.Sequential(nn.Conv2d(in_channels, 32,  3, padding=1), nn.BatchNorm2d(32),  nn.ReLU())
+        self.enc2  = nn.Sequential(nn.Conv2d(32,          64,  3, padding=1), nn.BatchNorm2d(64),  nn.ReLU())
+        self.down1 = nn.Sequential(nn.Conv2d(64,          64,  3, padding=1, stride=2), nn.BatchNorm2d(64),  nn.ReLU())
+        self.enc3  = nn.Sequential(nn.Conv2d(64,          128, 3, padding=1), nn.BatchNorm2d(128), nn.ReLU())
+        self.down2 = nn.Sequential(nn.Conv2d(128,         128, 3, padding=1, stride=2), nn.BatchNorm2d(128), nn.ReLU())
+
+        # Decoder — same as yours
+        self.up1  = nn.ConvTranspose2d(128, 64, 3, stride=2, padding=1, output_padding=1)
+        self.dec1 = nn.Sequential(nn.Conv2d(64,  64,          3, padding=1), nn.BatchNorm2d(64),  nn.ReLU())
+        self.up2  = nn.ConvTranspose2d(64,  32, 3, stride=2, padding=1, output_padding=1)
+        self.dec2 = nn.Sequential(nn.Conv2d(32,  in_channels, 3, padding=1))
+
+        self.relu = nn.ReLU(inplace=True)
+
+    def forward(self, x):  # ← no mask needed!
+        # Encoder
+        z = self.enc1(x)
+        z = self.enc2(z)
+        z = self.down1(z)
+        z = self.enc3(z)
+        z = self.down2(z)
+
+        latent = z
+
+        # Decoder
+        z = self.relu(self.up1(z))
+        z = self.dec1(z)
+        z = self.relu(self.up2(z))
+        x_hat = self.dec2(z)
+
+        x_hat = x_hat[:, :, :x.shape[2], :x.shape[3]]
+
+        return x_hat, latent
