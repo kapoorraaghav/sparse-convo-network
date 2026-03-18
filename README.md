@@ -56,7 +56,7 @@ Implementing true sparse FLOPs reduction is the proposed GSOC contribution.*
 
 
 ## Project Structure
-```
+
 ├-- model.py                          # Sparse conv operators + autoencoder
 ├-- model_1.ipynb                     # Unsupervised pretraining
 ├-- finetuning.ipynb                  # Fine-tuning + evaluation
