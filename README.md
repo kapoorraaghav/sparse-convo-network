@@ -42,9 +42,9 @@ Two core sparse operators implemented from scratch in PyTorch (`model.py`):
 ## Results
 
 ### Classification
-| Setting                        | Val Accuracy |  
+| Setting                        | Val Accuracy |  |AUC|
 | Initial (Adam + dropout 0.9)   | ~50% |
-| After fixes (SGD, no dropout)  | **81.75%** |
+| After fixes (SGD, no dropout)  | **81.75%** |   |0.89|
 
 ### Dense Baseline Comparison
 | Metric        | Dense   | Sparse | Ratio              |
