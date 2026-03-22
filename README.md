@@ -37,7 +37,7 @@ Two core sparse operators implemented from scratch in PyTorch (`model.py`):
 - Two-phase training: frozen encoder (10 epochs) → full fine-tuning
 - SGD (lr=0.1, momentum=0.9, weight_decay=1e-4)
 
----
+```
 
 ## Results
 
@@ -53,7 +53,7 @@ Two core sparse operators implemented from scratch in PyTorch (`model.py`):
 
 *Note: FLOPs comparison requires a native sparse backend (spconv). 
 Implementing true sparse FLOPs reduction is the proposed GSOC contribution.*
-
+```
 
 ## Project Structure
 ~~~
