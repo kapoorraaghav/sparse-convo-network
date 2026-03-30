@@ -62,6 +62,7 @@ Implementing true sparse FLOPs reduction is the proposed GSOC contribution.*
 ├-- finetuning.ipynb                  # Fine-tuning + evaluation
 |-- dense.ipynb
 |-- comparison.ipynb                  # shows comaparison between dense and sparse   baseline comparison
+|-- pruning.ipynb  
 ├-- models/
 │   -- sparse_autoencoder_checkpoint_2.pth
 │   -- sparse_classifier.pth
